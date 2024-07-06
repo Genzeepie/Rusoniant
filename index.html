@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rusoniat Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js" integrity="sha512-luMnTJZ7oEchNDZAtQhgjomP1eZefnl82ruTH/3Oj/Yu5qYtwL7+dVRccACS/Snp1lFXq188XFipHKYE75IaQQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body style="text-align:center: font-family: Arial, serif; font size 14pt">
+<div align="center">
+    <h1>Welcome to Rusoniat</h1>
+    <p>Welcome to my website named Rusoniat. Well, it's not done, but I will continue to program this.
+    Please give suggestions on Discord (User: genzeepieYT). This website is supposed to be a chatroom and will be one.</p>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var socket = io.connect("http://localhost:5000");
+
+        socket.on('connect', function() {
+            socket.send("User connected!");
+        });
+
+        socket.on('message', function(data) {
+            $('#messages').append('<p>' + data + '</p>');
+        });
+
+        $('#sendBtn').on('click', function() {
+            socket.send($('#username').val() + ': ' + $('#message').val());
+            $('#message').val(''); // Clear the message input
+        });
+    });
+</script>
+
+<div align="center">
+    <input required type="text" id="username" placeholder="Username" style="margin: 0 auto ;width: 20% ;text-align: center">
+<input required type="text" id="message" placeholder="Message" style="margin: 0 auto ;width: 20% ;text-align: center">
+<br>
+<br>
+<button id="sendBtn" style="border-radius: 25px; background-color: forestgreen; margin: 0 auto ;width: 10% ;text-align: center">Send</button>
+</div>
+<br>
+<br>
+<div id="messages" style="margin: 0 auto ;width: 60% ;text-align: Left">
+
+</div>
+</body>
+</html>
